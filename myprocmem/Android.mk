@@ -12,34 +12,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_PATH := $(call my-dir)
+LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := libpagemap
+LOCAL_SRC_FILES := myprocmem.c
+
+LOCAL_C_INCLUDES := $(call include-path-for, libpagemap)
+
+LOCAL_SHARED_LIBRARIES := libpagemap
+
+LOCAL_MODULE := myprocmem
+
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+
 LOCAL_MODULE_TAGS := debug
 
-LOCAL_SRC_FILES := \
-	pm_kernel.c \
-	pm_process.c \
-	pm_map.c \
-	pm_smap.c \
-	pm_memusage.c
+include $(BUILD_EXECUTABLE)
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 
-include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := libpagemap
+LOCAL_SRC_FILES := myprocmem.c
+
+LOCAL_C_INCLUDES := $(call include-path-for, libpagemap)
+
+#LOCAL_SHARED_LIBRARIES := libpagemap
+LOCAL_STATIC_LIBRARIES := libc \
+						 libpagemap
+						 
+LOCAL_MODULE := myprocmem
+
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+
 LOCAL_MODULE_TAGS := debug
+LOCAL_FORCE_STATIC_EXECUTABLE := true
 
-LOCAL_SRC_FILES := \
-	pm_kernel.c \
-	pm_process.c \
-	pm_map.c \
-	pm_smap.c \
-	pm_memusage.c
-
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
-
-include $(BUILD_STATIC_LIBRARY)
+include $(BUILD_EXECUTABLE)
